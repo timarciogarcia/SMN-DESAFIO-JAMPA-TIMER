@@ -12,6 +12,7 @@ let state = {
   data: getBD(),
   editRecord: false,
   recordEdited: 0,
+  modoConsulta: false
 };
 
 //Variaveis exclusivas da Paginação
@@ -155,9 +156,10 @@ const search = {
   searchDisable(tf) {
     html.g("m-buttonSearch").disabled = tf;
     html.g("m-filtro").disabled = tf;
-    html.g("m-clearSearch").disabled = tf;
+    //html.g("m-clearSearch").disabled = tf;
     html.g("m-buttonLupa").disabled = tf;
     html.g("m-pesquisa").disabled = tf;
+    dataBase.enableInput(tf);
   },
   mySearch(pesquisa, filtro) {
     dataBase.saveBackup();
@@ -179,6 +181,7 @@ const search = {
     }
     if (parseInt(filtrado.length) > 0) {
       state.data = filtrado;
+      search.searchDisable(true);
       setBD();
     } else {
       dataBase.restoreBackup();
@@ -187,6 +190,7 @@ const search = {
   clearSearch() {
     pesquisa = "";
     filtro = "";
+    search.searchDisable(false);
     dataBase.restoreBackup();
   },
 };
@@ -201,6 +205,7 @@ const dataBase = {
   read(index) {
     state.editRecord = true;
     search.searchDisable(true);
+    dataBase.enableInput(false);
     index = state.recordEdited =
       index + (statePagination.page - 1) * statePagination.perPage;
     html.g("m-index").value = index;
@@ -578,6 +583,11 @@ const dataBase = {
       setBD();
     }
   },
+  enableInput(tf){
+    html.g("m-usuario").disabled = tf;
+    html.g("m-atividade").disabled = tf;
+    html.g("m-tipodeatividade").disabled = tf;
+  }
 };
 
 // Tabela
@@ -718,6 +728,14 @@ function init() {
   myLoad.initialize();
   list.update();
   controls.createListeners();
+  if (localStorage.getItem("DbBackup")) {
+    search.searchDisable(true);
+    html.g("m-clearSearch").innerHTML = 'X'
+    html.g("m-clearSearch").style.backgroundColor ='#50f450'
+    html.g("m-clearSearch").style.color ='black'
+    html.g("m-clearSearch").style.fontWeight ='bold'
+    html.g("buttontimer").style.display = 'none'
+  }
 }
 
 init();
