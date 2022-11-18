@@ -161,6 +161,7 @@ const search = {
   },
   mySearch(pesquisa, filtro) {
     dataBase.saveBackup();
+    filtro == 0 ? filtro=1: filtro
     if (filtro == 1) {
       var filtrado = state.data.filter(
         (obj) => obj.usuario.indexOf(pesquisa.toUpperCase()) != -1
