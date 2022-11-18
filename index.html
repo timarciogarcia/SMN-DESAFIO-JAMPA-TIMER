@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Controle de Atividade</title>
+  </head>
+  <body id="body">
+    <header id="header">
+        <img src="./img/image.png" alt="Logo" title="SMN - JOÃO PESSOA - PB"/>
+    </header>
+    <div>
+      <div class="container">
+        <div class="container1">
+          <div class="search">
+            <form id="searchForm">
+              <button id="m-buttonLupa" class="buttonLupa" onclick="">
+                  <img src="./img/lupa.png" width="20px" alt="Lupa" />
+              </button>
+              <input
+                type="text"
+                id="m-pesquisa"
+                name="pesquisa"
+                title="Digite aqui sua pesquisa."
+                placeholder="Procurar"
+              />
+              <select
+                id="m-filtro"
+                name="filtro"
+                title="Escolha o tipo de filtro"
+              >
+                <option value="1" selected>Usuário</option>
+                <option value="2">Atividade</option>
+                <option value="3">Tipo de Atividade</option>
+              </select>
+              <button id="m-buttonSearch" class="botaoSearch">
+                <i
+                  id="pesquisa"
+                  onclick=""
+                  class="bx bx-search"
+                  title="Clique aqui para Pesquisar !"
+                ></i>
+              </button>
+              <button
+                id="m-clearSearch"
+                class="botaoSearch"
+                onclick="search.clearSearch()"
+              >
+                <i
+                  id="limpaPesquisa"
+                  onclick=""
+                  class="bx bx-x"
+                  title="Clique aqui para Limpar a Pesquisar !"
+                ></i>
+              </button>
+            </form>
+          </div>
+          <div class="input">
+            <form id="inputForm">
+              <input id="m-index" type="text" hidden="true" />
+              <div>
+                <label for="m-usuario">
+                  <b>USUÁRIO:</b>
+                  <input
+                    id="m-usuario"
+                    type="text"
+                    maxlength="25"
+                    title="Nome do Usuário"
+                  />
+                </label>
+              </div>
+              <div>
+                <label for="m-atividade">
+                  <b>ATIVIDADE:</b>
+                  <input
+                    id="m-atividade"
+                    type="text"
+                    maxlength="25"
+                    title="Atividade"
+                  />
+                </label>
+              </div>
+              <div>
+                <label for="m-tipodeatividade">
+                  <b>TIPO DE ATIVIDADE:</b>
+                  <input
+                    id="m-tipodeatividade"
+                    type="text"
+                    maxlength="25"
+                    title="Tip de Atividade"
+                  />
+                </label>
+              </div>
+              <div>
+                <label for="m-botaosave">
+                  <b>&nbsp;</b>
+                  <button class="botaoSearch" id="botaoSearch" onclick="dataBase.updateByButton()">
+                    <i
+                      id="limpaPesquisa"
+                      class="bx bx-save"
+                      title="Clique aqui para Salvar !"
+                    ></i>
+                  </button>
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="container2">
+          <div class="timer">
+            <label id="watch" title="Tempo Decorrido">00:00:00</label>
+          </div>
+          <div id="buttontimer" class="buttontimer">
+            <i
+              id="start"
+              onclick="timeControl.start()"
+              class="bx bx-play"
+              title="Iniciar"
+            ></i>
+            <i
+              id="pause"
+              onclick="timeControl.pause()"
+              class="bx bx-pause"
+              title="Pausar"
+            ></i>
+            <i
+              id="stop"
+              onclick="timeControl.stop()"
+              class="bx bx-stop"
+              title="Parar"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div class="tablecontainer" id="tablecontainer">
+        <table class="table">
+          <thead>
+            <tr>
+              <th width="25%">
+                USUÁRIO
+                <i
+                  id="order"
+                  onclick="table.sortByUsuario(true)"
+                  class="bx bx-arrow-from-bottom"
+                  title="Ordenar"
+                ></i>
+              </th>
+              <th width="25%">
+                ATIVIDADE
+                <i
+                  id="order"
+                  onclick="table.sortByAtividade(true)"
+                  class="bx bx-arrow-from-bottom"
+                  title="Ordenar"
+                ></i>
+              </th>
+              <th width="25%">
+                TIPO DE ATIVIDADE
+                <i
+                  id="order"
+                  onclick="table.sortByTipoDeAtividade(true)"
+                  class="bx bx-arrow-from-bottom"
+                  title="Ordenar"
+                ></i>
+              </th>
+              <th width="25%">
+                TEMPO
+                <i
+                  id="order"
+                  onclick="table.sortByTempo(true)"
+                  class="bx bx-arrow-from-bottom"
+                  title="Ordem Crescente"
+                ></i>
+                <i
+                  id="order"
+                  onclick="table.sortByTempo(false)"
+                  class="bx bx-arrow-from-top"
+                  title="Ordem Decrescente"
+                ></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="m-list" class="list"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination">
+        <button id="m-first"><i class="bx bx-first-page"></i></button>
+        <button id="m-prev"><i class="bx bx-caret-left"></i></button>
+        <button id="m-page" class="pagenumber"></button>
+        <button id="m-next"><i class="bx bx-caret-right"></i></button>
+        <button id="m-last"><i class="bx bx-last-page"></i></button>
+      </div>
+    </div>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
