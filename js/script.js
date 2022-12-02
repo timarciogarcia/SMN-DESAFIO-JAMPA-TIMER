@@ -16,21 +16,20 @@ let state = {
 };
 
 //Variaveis exclusivas da Paginação
-let perPage = 8;
 let statePagination = {
   myAlertOk: false,
   myAlertConfirm: false,
   paginaAtual: 0,
   page: 1,
-  perPage,
-  totalPage: Math.ceil(state.data.length / perPage),
+  perPage: 8,
+  totalPage: Math.ceil(state.data.length / this.perPage),
   maxVisibleButtons: 3,
   edit: false,
 };
 
 // Objeto de Tags pelo ID
 const html = {
-  g(element) {
+  getById(element) {
     return document.getElementById(element);
   },
 };
@@ -41,18 +40,18 @@ const myLoad = {
     search.searchDisable(false);
     state.data = getBD();
     list.update();
-    html.g("buttontimer").style.display = "block";
-    html.g("botaoSearch").style.display = "none";
-    html.g("m-list").innerHTML = "";
+    html.getById("buttontimer").style.display = "block";
+    html.getById("botaoSearch").style.display = "none";
+    html.getById("m-list").innerHTML = "";
     list.update();
     if (state.data.length === 0) {
-      html.g("tablecontainer").style.display = "none";
-      html.g("pagination").style.display = "none";
-      html.g("body").style.height = "210px";
+      html.getById("tablecontainer").style.display = "none";
+      html.getById("pagination").style.display = "none";
+      html.getById("body").style.height = "220px";
     } else {
-      html.g("tablecontainer").style.display = "block";
-      html.g("pagination").style.display = "flex";
-      html.g("body").style.height = "768px";
+      html.getById("tablecontainer").style.display = "block";
+      html.getById("pagination").style.display = "flex";
+      html.getById("body").style.height = "768px";
     }
   },
   createItemonTable(item, index) {
@@ -66,26 +65,26 @@ const myLoad = {
       <td width="10px" class="optionsTable" onclick= "dataBase.read(${index})" ><i class='bx bx-edit'></td>
       <td width="10px" class="optionsTable" onclick= "dataBase.delete(${index})" ><i class='bx bx-trash'></td>
     `;
-    html.g("m-list").appendChild(tr);
-  },
+    html.getById("m-list").appendChild(tr);
+  }
 };
 
 // Cronômetro
 const timeControl = {
   myDisable(tf) {
-    html.g("m-usuario").disabled = tf;
-    html.g("m-atividade").disabled = tf;
-    html.g("m-tipodeatividade").disabled = tf;
-    html.g("m-pesquisa").disabled = tf;
-    html.g("m-filtro").disabled = tf;
-    html.g("m-buttonSearch").disabled = tf;
-    html.g("m-clearSearch").disabled = tf;
+    html.getById("m-usuario").disabled = tf;
+    html.getById("m-atividade").disabled = tf;
+    html.getById("m-tipodeatividade").disabled = tf;
+    html.getById("m-pesquisa").disabled = tf;
+    html.getById("m-filtro").disabled = tf;
+    html.getById("m-buttonSearch").disabled = tf;
+    html.getById("m-clearSearch").disabled = tf;
   },
   start() {
     if (
-      html.g("m-usuario").value == "" ||
-      html.g("m-atividade").value == "" ||
-      html.g("m-tipodeatividade").value == ""
+      html.getById("m-usuario").value == "" ||
+      html.getById("m-atividade").value == "" ||
+      html.getById("m-tipodeatividade").value == ""
     ) {
       if (state.milisecSave <= 0) {
         var result = confirm(
@@ -94,7 +93,7 @@ const timeControl = {
         if (result) {
           timeControl.startComplete();
         } else {
-          html.g("m-usuario").focus();
+          html.getById("m-usuario").focus();
         }
       } else {
         timeControl.startComplete();
@@ -107,16 +106,16 @@ const timeControl = {
     timeControl.watch();
     state.interval = setInterval(timeControl.watch, 1000);
     timeControl.myDisable(true);
-    html.g("pause").className = "bx bx-pause";
-    html.g("start").title = "Iniciar";
-    html.g("start").className = "";
+    html.getById("pause").className = "bx bx-pause";
+    html.getById("start").title = "Iniciar";
+    html.getById("start").className = "";
   },
   pause() {
     if (state.sec > 0) {
       clearInterval(state.interval);
-      html.g("pause").className = "";
-      html.g("start").className = "bx bx-play";
-      html.g("start").title = "Retomar";
+      html.getById("pause").className = "";
+      html.getById("start").className = "bx bx-play";
+      html.getById("start").title = "Retomar";
     }
   },
   stop() {
@@ -136,7 +135,7 @@ const timeControl = {
         state.hr++;
       }
     }
-    html.g("watch").innerText =
+    html.getById("watch").innerText =
       timeControl.myFormat(state.hr, 2) +
       ":" +
       timeControl.myFormat(state.min, 2) +
@@ -154,11 +153,11 @@ const timeControl = {
 //Pesquisa
 const search = {
   searchDisable(tf) {
-    html.g("m-buttonSearch").disabled = tf;
-    html.g("m-filtro").disabled = tf;
-    //html.g("m-clearSearch").disabled = tf;
-    html.g("m-buttonLupa").disabled = tf;
-    html.g("m-pesquisa").disabled = tf;
+    html.getById("m-buttonSearch").disabled = tf;
+    html.getById("m-filtro").disabled = tf;
+    //html.getById("m-clearSearch").disabled = tf;
+    html.getById("m-buttonLupa").disabled = tf;
+    html.getById("m-pesquisa").disabled = tf;
     dataBase.enableInput(tf);
   },
   mySearch(pesquisa, filtro) {
@@ -208,20 +207,17 @@ const dataBase = {
     dataBase.enableInput(false);
     index = state.recordEdited =
       index + (statePagination.page - 1) * statePagination.perPage;
-    html.g("m-index").value = index;
-    html.g("m-usuario").value = state.data[index].usuario;
-    html.g("m-atividade").value = state.data[index].atividade;
-    html.g("m-tipodeatividade").value = state.data[index].tipodeatividade;
-    html.g("watch").innerHTML = state.data[index].tempo;
+    html.getById("m-index").value = index;
+    html.getById("m-usuario").value = state.data[index].usuario;
+    html.getById("m-atividade").value = state.data[index].atividade;
+    html.getById("m-tipodeatividade").value = state.data[index].tipodeatividade;
+    html.getById("watch").innerHTML = state.data[index].tempo;
     state.milisecSave = state.data[index].tempoSegundos;
     state.sec = state.data[index].tempoSegundos;
-    html.g("buttontimer").style.display = "none";
+    html.getById("buttontimer").style.display = "none";
     //Diminuir aqui o tamanho da tela e aparecer o botao save
-    html.g("m-usuario").style.width = "190px";
-    html.g("m-atividade").style.width = "190px";
-    html.g("m-tipodeatividade").style.width = "190px";
-    html.g("botaoSearch").style.display = "block";
-    html.g("m-usuario").focus();
+    html.getById("botaoSearch").style.display = "block";
+    html.getById("m-usuario").focus();
   },
   update() {
     state.data[state.recordEdited].usuario = html
@@ -233,7 +229,7 @@ const dataBase = {
     state.data[state.recordEdited].tipodeatividade = html
       .g("m-tipodeatividade")
       .value.toUpperCase();
-    state.data[state.recordEdited].tempo = html.g("watch").innerHTML;
+    state.data[state.recordEdited].tempo = html.getById("watch").innerHTML;
     state.data[state.recordEdited].tempoSegundos = state.milisecSave;
     state.editRecord = false;
     state.recordEdited = 0;
@@ -244,20 +240,20 @@ const dataBase = {
   updateByButton() {
     if (state.editRecord) {
       if (
-        html.g("m-usuario").value.trim() == "" ||
-        html.g("m-atividade").value.trim() == "" ||
-        html.g("m-tipodeatividade").value.trim() == ""
+        html.getById("m-usuario").value.trim() == "" ||
+        html.getById("m-atividade").value.trim() == "" ||
+        html.getById("m-tipodeatividade").value.trim() == ""
       ) {
         var result = confirm(
           "Existem campos vazios.\nTem certeza que deseja salvar mesmo assim ?"
         );
         if (!result) {
-          html.g("m-usuario").focus();
+          html.getById("m-usuario").focus();
           return;
         }
       }
-      var controle = html.g("m-index").value;
-      state.data[controle].usuario = html.g("m-usuario").value.toUpperCase();
+      var controle = html.getById("m-index").value;
+      state.data[controle].usuario = html.getById("m-usuario").value.toUpperCase();
       state.data[controle].atividade = html
         .g("m-atividade")
         .value.toUpperCase();
@@ -277,14 +273,14 @@ const dataBase = {
 
         arrayTemp.forEach((item, index) => {
           if (item.registro == registroBuscardor) {
-            arrayTemp[index].usuario = html.g("m-usuario").value.toUpperCase();
+            arrayTemp[index].usuario = html.getById("m-usuario").value.toUpperCase();
             arrayTemp[index].atividade = html
               .g("m-atividade")
               .value.toUpperCase();
             arrayTemp[index].tipodeatividade = html
               .g("m-tipodeatividade")
               .value.toUpperCase();
-            arrayTemp[index].tempo = html.g("watch").innerHTML;
+            arrayTemp[index].tempo = html.getById("watch").innerHTML;
             arrayTemp[index].tempoSegundos = state.milisecSave;
           }
         });
@@ -294,6 +290,7 @@ const dataBase = {
       dataBase.inputSetClear();
       setBD();
       alert("Atividade editada com sucesso !");
+      html.getById("botaoSearch").style.display = "none";
       init();
     }
   },
@@ -338,18 +335,18 @@ const dataBase = {
   },
   inputSetClear() {
     timeControl.myDisable(false);
-    html.g("pause").className = "bx bx-pause";
-    html.g("start").className = "bx bx-play";
-    html.g("start").title = "Iniciar";
+    html.getById("pause").className = "bx bx-pause";
+    html.getById("start").className = "bx bx-play";
+    html.getById("start").title = "Iniciar";
 
-    html.g("m-usuario").value = "";
-    html.g("m-atividade").value = "";
-    html.g("m-tipodeatividade").value = "";
-    html.g("m-pesquisa").value = "";
+    html.getById("m-usuario").value = "";
+    html.getById("m-atividade").value = "";
+    html.getById("m-tipodeatividade").value = "";
+    html.getById("m-pesquisa").value = "";
 
     clearInterval(state.interval);
-    html.g("watch").innerText = "00:00:00";
-    html.g("m-usuario").focus();
+    html.getById("watch").innerText = "00:00:00";
+    html.getById("m-usuario").focus();
     state.hr = 0;
     state.sec = 0;
     state.min = 0;
@@ -486,10 +483,10 @@ const dataBase = {
     init();
   },
   addTime() {
-    var sUsuario = html.g("m-usuario").value.toUpperCase().trim();
-    var sAtividade = html.g("m-atividade").value.toUpperCase().trim();
+    var sUsuario = html.getById("m-usuario").value.toUpperCase().trim();
+    var sAtividade = html.getById("m-atividade").value.toUpperCase().trim();
     var sTipoDeAtividade = html
-      .g("m-tipodeatividade")
+      .getById("m-tipodeatividade")
       .value.toUpperCase()
       .trim();
     var filtrado = ([] = state.data.filter(
@@ -502,10 +499,10 @@ const dataBase = {
       if (!state.editRecord) {
         state.data = getBD();
         let Inclusao = {
-          usuario: html.g("m-usuario").value.toUpperCase(),
-          atividade: html.g("m-atividade").value.toUpperCase(),
-          tipodeatividade: html.g("m-tipodeatividade").value.toUpperCase(),
-          tempo: html.g("watch").innerHTML,
+          usuario: html.getById("m-usuario").value.toUpperCase(),
+          atividade: html.getById("m-atividade").value.toUpperCase(),
+          tipodeatividade: html.getById("m-tipodeatividade").value.toUpperCase(),
+          tempo: html.getById("watch").innerHTML,
           tempoSegundos: state.milisecSave,
           registro: state.data.length,
         };
@@ -547,7 +544,7 @@ const dataBase = {
 
         arrayTemp.forEach((item, index) => {
           if (item.registro == registroBuscardor) {
-            arrayTemp[index].usuario = html.g("m-usuario").value.toUpperCase();
+            arrayTemp[index].usuario = html.getById("m-usuario").value.toUpperCase();
             arrayTemp[index].atividade = html
               .g("m-atividade")
               .value.toUpperCase();
@@ -584,9 +581,9 @@ const dataBase = {
     }
   },
   enableInput(tf){
-    html.g("m-usuario").disabled = tf;
-    html.g("m-atividade").disabled = tf;
-    html.g("m-tipodeatividade").disabled = tf;
+    html.getById("m-usuario").disabled = tf;
+    html.getById("m-atividade").disabled = tf;
+    html.getById("m-tipodeatividade").disabled = tf;
   }
 };
 
@@ -666,19 +663,19 @@ const controls = {
       page > statePagination.totalPage ? statePagination.totalPage : +page;
   },
   createListeners() {
-    html.g("m-first").addEventListener("click", () => {
+    html.getById("m-first").addEventListener("click", () => {
       controls.goTo(1);
       list.update();
     });
-    html.g("m-last").addEventListener("click", () => {
+    html.getById("m-last").addEventListener("click", () => {
       controls.goTo(statePagination.totalPage);
       list.update();
     });
-    html.g("m-next").addEventListener("click", () => {
+    html.getById("m-next").addEventListener("click", () => {
       controls.next();
       list.update();
     });
-    html.g("m-prev").addEventListener("click", () => {
+    html.getById("m-prev").addEventListener("click", () => {
       controls.prev();
       list.update();
     });
@@ -697,10 +694,10 @@ const list = {
       <td width="10px" class="optionsTable" onclick= "dataBase.read(${index})" ><i class='bx bx-edit'></td>
       <td width="10px" class="optionsTable" onclick= "dataBase.delete(${index})" ><i class='bx bx-trash'></td>
     `;
-    html.g("m-list").appendChild(tr);
+    html.getById("m-list").appendChild(tr);
   },
   update() {
-    html.g("m-list").innerHTML = "";
+    html.getById("m-list").innerHTML = "";
     let page = statePagination.page - 1;
     let start = page * statePagination.perPage;
     let end = start + statePagination.perPage;
@@ -709,7 +706,7 @@ const list = {
     paginatedItems.forEach((item, index, arrayData) => {
       list.create(item, index);
     });
-    html.g("m-page").innerText = statePagination.page;
+    html.getById("m-page").innerText = statePagination.page;
   },
 };
 
@@ -730,11 +727,11 @@ function init() {
   controls.createListeners();
   if (localStorage.getItem("DbBackup")) {
     search.searchDisable(true);
-    html.g("m-clearSearch").innerHTML = 'X'
-    html.g("m-clearSearch").style.backgroundColor ='#50f450'
-    html.g("m-clearSearch").style.color ='black'
-    html.g("m-clearSearch").style.fontWeight ='bold'
-    html.g("buttontimer").style.display = 'none'
+    html.getById("m-clearSearch").innerHTML = 'X'
+    html.getById("m-clearSearch").style.backgroundColor ='#50f450'
+    html.getById("m-clearSearch").style.color ='black'
+    html.getById("m-clearSearch").style.fontWeight ='bold'
+    html.getById("buttontimer").style.display = 'none'
   }
 }
 

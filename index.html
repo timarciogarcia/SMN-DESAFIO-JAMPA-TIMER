@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/styleMobile700.css" />
+    <link rel="stylesheet" type="text/css" href="./css/styleMobile500.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
       rel="stylesheet"
@@ -13,7 +15,7 @@
   </head>
   <body id="body">
     <header id="header">
-        <img src="./img/image.png" alt="Logo" title="SMN - JOÃO PESSOA - PB"/>
+        <img src="./img/LogoTipoSMN.png" alt="LogoTipoSMN" title="SMN - JOÃO PESSOA - PB"/>
     </header>
     <div>
       <div class="container">
@@ -90,7 +92,7 @@
               </div>
               <div>
                 <label for="m-tipodeatividade">
-                  <b>TIPO DE ATIVIDADE:</b>
+                  <b>TP ATIVIDADE:</b>
                   <input
                     id="m-tipodeatividade"
                     type="text"
@@ -102,7 +104,7 @@
               <div>
                 <label for="m-botaosave">
                   <b>&nbsp;</b>
-                  <button class="botaoSearch" id="botaoSearch" onclick="dataBase.updateByButton()">
+                  <button class="botaoSearchsave" id="botaoSearch" onclick="dataBase.updateByButton()">
                     <i
                       id="limpaPesquisa"
                       class="bx bx-save"
@@ -152,6 +154,12 @@
                   class="bx bx-arrow-from-bottom"
                   title="Ordenar"
                 ></i>
+                <i
+                  id="order"
+                  onclick="table.sortByUsuario(false)"
+                  class="bx bx-arrow-from-top"
+                  title="Ordem Decrescente"
+                ></i>
               </th>
               <th width="25%">
                 ATIVIDADE
@@ -161,15 +169,28 @@
                   class="bx bx-arrow-from-bottom"
                   title="Ordenar"
                 ></i>
+                <i
+                id="order"
+                onclick="table.sortByAtividade(false)"
+                class="bx bx-arrow-from-top"
+                title="Ordenar"
+              ></i>
               </th>
-              <th width="25%">
-                TIPO DE ATIVIDADE
+              <th width="25%" class="tpatividade">
+                TP ATIV.
                 <i
                   id="order"
                   onclick="table.sortByTipoDeAtividade(true)"
                   class="bx bx-arrow-from-bottom"
                   title="Ordenar"
                 ></i>
+                <i
+                id="order"
+                onclick="table.sortByTipoDeAtividade(false)"
+                class="bx bx-arrow-from-top"
+                title="Ordenar"
+              ></i>
+
               </th>
               <th width="25%">
                 TEMPO

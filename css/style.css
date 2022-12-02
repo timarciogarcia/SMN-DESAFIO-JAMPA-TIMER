@@ -9,7 +9,7 @@
 
 body {
   width: 100%;
-  height: 768px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -26,8 +26,10 @@ select:focus {
 }
 
 body header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 900px;
-  height: 70px;
   background-color: rgb(255, 255, 255);
   border-top: 3px solid rgb(80, 244, 80);
 }
@@ -35,9 +37,9 @@ body header {
 body header img {
   display: block;
   margin: auto;
-  height: 60px;
+  height: 70px !important;
   background-color: rgb(255, 255, 255);
-  padding-top: 5px;
+  padding: 5px;
 }
 
 body div {
@@ -114,7 +116,7 @@ body div div {
 
 .input form input {
   height: 30px;
-  width: 200px;
+  width: 190px;
   padding-left: 5px;
   border: none;
   background-color: rgb(215, 213, 213);
@@ -247,6 +249,19 @@ body div div {
   background-color: rgb(198, 197, 197);
 }
 
+.botaoSearchsave {
+  height: 30px !important;
+  width: 30px !important;
+  margin-left: 5px !important;
+  background-color: rgb(215, 213, 213);
+  border: none !important;
+  border-radius: 5px !important;
+  padding-top: 2px !important;
+  font-size: 1rem !important;
+  cursor: pointer;
+}
+
+
 /*pagination*/
 
 .pagination {
@@ -279,4 +294,8 @@ body div div {
 
 .buttonLupa{
   pointer-events: none;
+}
+
+@media screen {
+  
 }

@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap");
+
+
+
+@media (max-width: 900px) {
+
+  body header {
+    width: 700px;
+  }
+
+  body div {
+    width: 700px;
+  }
+
+  body div div {
+    width: 450px;
+  }
+
+  .search {
+    width: 440px;
+    height: 50px;
+    margin-left: 1px;
+  }
+
+  .search form button {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .search input {
+    height: 30px;
+    margin-left: 0px;
+    padding-left: 5px;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+  }
+  
+  .search select {
+    width: 150px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .input {
+    width: 440px;
+    height: 50px;
+    margin-left: 1px;
+    margin-top: 0px;
+  }
+
+  .input form input {
+    width: 128px;
+  }
+
+  .input form label {
+    font-size: 0.8rem;
+  }
+
+  .container2 {
+    width: 235px;
+  }
+
+  .timer {
+    width: 225px;
+  }
+
+  .buttontimer {
+    width: 225px;
+  }
+  
+  .table thead {
+    height: 30px;
+    font-size: 0.7rem;
+  }
+
+  .table thead tr th i {
+    font-size: 0.6rem;
+    cursor: pointer;
+  }
+    
+  .table tbody tr {
+    height: 30px;
+    font-size: 0.7rem;
+  }
+  
+}
